@@ -5,7 +5,7 @@ import { Movie } from '../../types/Movie';
 export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   // Increase the count after successful form submission
   // to reset touched status of all the `Field`s
-  const [count] = useState(0);
+  const [count, setCount] = useState(0);
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [imgUrl, setImgUrl] = useState<string>('');
@@ -14,7 +14,7 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const checkFormValues = () => {
-    if (title && imgUrl && imdbUrl && imdbId) {
+    if (title.trim() && imgUrl.trim() && imdbUrl.trim() && imdbId.trim()) {
       setIsDisabled(false);
     }
   };
@@ -35,7 +35,15 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
 
     onAdd(movie);
 
+    // clear form
+    setTitle('');
+    setDescription('');
+    setImgUrl('');
+    setImdbUrl('');
+    setImdbId('');
     setIsDisabled(true);
+
+    setCount(+count);
   };
 
   return (
@@ -68,6 +76,7 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
         onChange={value => {
           setImgUrl(value);
         }}
+        required
       />
 
       <TextField
@@ -77,6 +86,7 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
         onChange={value => {
           setImdbUrl(value);
         }}
+        required
       />
 
       <TextField
@@ -86,6 +96,7 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
         onChange={value => {
           setImdbId(value);
         }}
+        required
       />
 
       <div className="field is-grouped">
