@@ -43,7 +43,7 @@ export const NewMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
     setImdbId('');
     setIsDisabled(true);
 
-    setCount(+count);
+    setCount(count + 1);
   };
 
   return (
